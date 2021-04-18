@@ -8,10 +8,10 @@ namespace Task3
     {
         int x;
         int y;
-        string name;
+        string name = null;
 
-        public int X { get; }
-        public int Y { get; }
+        public int X { get { return this.x; } }
+        public int Y { get { return this.y; } }
         public string Name { get; }
 
         public Point(string name, int x, int y )
@@ -20,7 +20,21 @@ namespace Task3
             this.y = y;
             this.name = name;
         }
-        public Point():this(" ",0,0){}
+
+        public Point(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+
+        public Point()
+        {
+            Console.Write("X: ");
+            this.x = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Y: ");
+            this.y = Convert.ToInt32(Console.ReadLine());
+        }
 
 
     }

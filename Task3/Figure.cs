@@ -7,61 +7,7 @@ namespace Task3
     class Figure
     {
         Point[] points;
-        int number;
-        private int Number
-        {
-           get
-            {
-                return number;
-            }
-           set
-            {
-                if (value >= 3 && value <= 5) number = value;
-                else
-                {
-                    Console.WriteLine("Неверное количество yглов. Теперь их 3");
-                    number = 3;
-                }
-            }
-        }
-
         string name;
-        Point CreatePoint()
-        {
-            int x;
-            int y;
-            string name;
-            Console.Write("name: ");
-            name = Console.ReadLine();
-
-            Console.Write("X: ");
-            x = Convert.ToInt32(Console.ReadLine());
-
-            Console.Write("Y: ");
-            y = Convert.ToInt32(Console.ReadLine());
-
-            return new Point(name, x, y);
-        }
-
-        //проблема зі створенням масивy або його заповненням
-        void InitFigure()
-        {
-            points = new Point[Number];
-
-            for (int i = 0; i < points.Length; i++)
-            {
-                Console.WriteLine($"{i+1} точка");
-                points[i] = CreatePoint();
-            }
-
-        }
-
-        public Figure()
-        {
-            Console.WriteLine("Введите количество yглов новой фигyры");
-            Number = Convert.ToInt32(Console.ReadLine());
-            InitFigure();
-        }
 
         double LengthSide(Point A, Point B)
         {
@@ -70,21 +16,36 @@ namespace Task3
 
         double CalculatePerimeter()
         {
-            double perimetr = 0;
-            for(int i = 0; i < points.Length -1 ; i++)
-            {
-                perimetr += LengthSide(points[i], points[i + 1]);
-            }
-            perimetr += LengthSide(points[0], points[points.Length-1]);
+            double perimeter = 0;
+            double arrayLength = this.points.Length;
 
-            return perimetr;
+            if (arrayLength < 3)
+            {
+                Console.WriteLine("Your figure is not defined or has less than 3 sides");
+            }
+            else
+            {
+                for (int i = 0; i < arrayLength; i++)
+                {
+                    if (i > 0)
+                    {
+                        perimeter += this.LengthSide(points[i - 1], points[i]);
+                    }
+                    if (i == arrayLength - 1)
+                    {
+                        perimeter += this.LengthSide(points[0], points[i]);
+                    }
+
+                }
+            }
+            return perimeter;
         }
 
         string FigureName()
         {
-            if (Number == 3) name = "3";
-            else if (Number == 4) name = "4";
-            else if (Number == 5) name = "5";
+            if (points.Length == 3) name = "triangle";
+            else if (points.Length == 4) name = "quad";
+            else if (points.Length == 5) name = "pentagone";
             return name;
         }
 
@@ -95,5 +56,18 @@ namespace Task3
             Console.WriteLine($"Perimetr is {CalculatePerimeter()}");
         }
 
+
+        public Figure(params Point[] points)
+        {
+            this.points = points;
+        }
+
+        //public void Show2()
+        //{
+        //    for(int i =0; i< this.points.Length; i++)
+        //    {
+        //        Console.WriteLine($"{points[i].X} {points[i].Y}" );
+        //    }
+        //}
     }
 }
